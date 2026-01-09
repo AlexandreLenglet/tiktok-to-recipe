@@ -3,8 +3,9 @@ TikTok to Recipe - FastAPI Backend
 Télécharge les vidéos TikTok et les analyse avec Gemini 1.5 Flash
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import google.generativeai as genai
 import subprocess
@@ -26,14 +27,21 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyDxNg-RvBcVQxbp6H8y2cb8Y
 # Configurer Gemini au démarrage
 genai.configure(api_key=GEMINI_API_KEY)
 
-# CORS pour permettre les requêtes depuis le frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-)
+# Custom CORS middleware to handle all requests
+@app.middleware("http")
+async def add_cors_headers(request: Request, call_next):
+    # Handle preflight OPTIONS request
+    if request.method == "OPTIONS":
+        response = JSONResponse(content={"status": "ok"}, status_code=200)
+    else:
+        response = await call_next(request)
+    
+    # Add CORS headers to all responses
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    response.headers["Access-Control-Max-Age"] = "86400"
+    return response
 
 
 class AnalyzeRequest(BaseModel):
