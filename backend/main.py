@@ -225,7 +225,7 @@ async def analyze_video(request: AnalyzeRequest):
             
             # 4. Analyser avec Gemini
             model = genai.GenerativeModel(
-                "gemini-1.5-flash",
+                "gemini-2.0-flash-exp",
                 generation_config=genai.GenerationConfig(
                     temperature=0.3,
                     max_output_tokens=4096,
