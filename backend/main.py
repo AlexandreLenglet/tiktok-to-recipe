@@ -112,21 +112,24 @@ def is_valid_tiktok_url(url: str) -> bool:
 
 
 def download_tiktok_video(url: str, output_dir: str) -> str | None:
-    """Télécharge une vidéo TikTok via yt-dlp."""
+    """Télécharge une vidéo TikTok via yt-dlp avec options anti-blocage."""
     output_template = os.path.join(output_dir, "video.%(ext)s")
     
     cmd = [
         "yt-dlp",
         "--no-warnings",
-        "--quiet",
+        "--no-check-certificate",
+        "--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "--referer", "https://www.tiktok.com/",
         "-f", "mp4/best[ext=mp4]/best",
         "-o", output_template,
         "--no-playlist",
+        "--extractor-args", "tiktok:api_hostname=api22-normal-c-useast2a.tiktokv.com",
         url
     ]
     
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
         
         if result.returncode != 0:
             return None
