@@ -1,22 +1,19 @@
 FROM python:3.11-slim
 
 # Install system dependencies for yt-dlp
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements and install Python dependencies
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . .
+# Copy application
+COPY main.py .
 
-# Expose port (will be overridden by Render)
-EXPOSE 10000
+# Default port
+ENV PORT=8080
 
-# Run the application with dynamic port
-CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000}
+# Start command - Railway injects PORT
+CMD python -c "import os; port=int(os.environ.get('PORT', 8080)); import uvicorn; uvicorn.run('main:app', host='0.0.0.0', port=port)"
