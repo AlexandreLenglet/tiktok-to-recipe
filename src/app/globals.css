@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #ff0050;
+  --accent-light: #ff3366;
+  --card-bg: #151515;
+  --card-border: #252525;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(21, 21, 21, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #ff0050 0%, #ff6b35 50%, #ffc107 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* TikTok-inspired gradient */
+.tiktok-gradient {
+  background: linear-gradient(135deg, #00f2ea 0%, #ff0050 100%);
+}
+
+.tiktok-gradient-text {
+  background: linear-gradient(135deg, #00f2ea 0%, #ff0050 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated button */
+.btn-primary {
+  background: linear-gradient(135deg, #ff0050 0%, #c50044 100%);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 0, 80, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 0, 80, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Input styling */
+.input-field {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #ff0050;
+  box-shadow: 0 0 0 3px rgba(255, 0, 80, 0.2);
+  outline: none;
+}
+
+/* Recipe output styling */
+.recipe-output h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.recipe-output h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #ff0050;
+}
+
+.recipe-output h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  color: #ededed;
+}
+
+.recipe-output p {
+  color: #a0a0a0;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-output ul, .recipe-output ol {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.recipe-output li {
+  margin: 0.5rem 0;
+  color: #d0d0d0;
+  line-height: 1.6;
+}
+
+.recipe-output strong {
+  color: #fff;
+}
+
+.recipe-output table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.recipe-output th {
+  background: rgba(255, 0, 80, 0.2);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recipe-output td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #d0d0d0;
+}
+
+.recipe-output hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1.5rem 0;
+}
+
+/* Loading animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 80, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 0, 80, 0.6);
+  }
+}
+
+.loading-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Floating particles background */
+.particles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(135deg, #ff0050, #00f2ea);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.step-indicator.active {
+  background: rgba(255, 0, 80, 0.1);
+  border-left: 3px solid #ff0050;
+}
+
+.step-indicator.completed {
+  background: rgba(0, 242, 234, 0.1);
+  border-left: 3px solid #00f2ea;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #151515;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
