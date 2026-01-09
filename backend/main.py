@@ -29,9 +29,9 @@ genai.configure(api_key=GEMINI_API_KEY)
 # CORS pour permettre les requêtes depuis le frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En production, limiter aux domaines autorisés
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
